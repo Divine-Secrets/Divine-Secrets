@@ -45,14 +45,17 @@
 //     console.log(`Server is running on port ${port}`);
 // });
 
+// server.js
 const express = require('express');
 const app = express();
 const port = 3000;
-const db = require('./db');
-const appRoutes = require('./routes/appRoutes');
+const db =require ('./db');
+const productController = require('./controllers/productController');
 
-app.use('/', appRoutes);
+app.get('/home', productController.getAllProducts);
+app.get('/categorys/:category', productController.getProductsByCategory);
+app.get('/products_details/:id', productController.getProductById);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log( `Server is running on port ${port}`);
 });

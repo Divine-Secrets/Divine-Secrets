@@ -6,3 +6,4 @@ const pool = new Pool({
   port: 5432,
   database: 'DivineSecrets'
 });
+module.exports=pool;

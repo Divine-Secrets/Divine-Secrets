@@ -1,34 +1,40 @@
+// models/productModel.js
 const pool = require('../db');
 
-class ProductModel {
-  async getAllProducts() {
+async function getAllProducts() {
     try {
-      const result = await pool.query('SELECT * FROM products');
-      return result.rows;
+        let result = await pool.query('SELECT product_name, description, price, category FROM products');
+        return result.rows;
     } catch (error) {
-      throw error;
+        console.error(error);
+        throw error;
     }
-  }
-
-  async getProductsByCategory(category) {
-    try {
-      const query = 'SELECT * FROM products WHERE category = $1';
-      const result = await pool.query(query, [category]);
-      return result.rows;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async getProductById(productId) {
-    try {
-      const query = 'SELECT * FROM products WHERE product_id = $1';
-      const result = await pool.query(query, [productId]);
-      return result.rows;
-    } catch (error) {
-      throw error;
-    }
-  }
 }
 
-module.exports = new ProductModel();
+async function getProductsByCategory(categoryName) {
+    try {
+        const query = 'SELECT * FROM products WHERE category = $1';
+        const result = await pool.query(query, [categoryName]);
+        return result.rows;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+async function getProductById(productId) {
+    try {
+        const query = 'SELECT * FROM products WHERE product_id = $1';
+        const result = await pool.query(query, [productId]);
+        return result.rows;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+module.exports = {
+    getAllProducts,
+    getProductsByCategory,
+    getProductById,
+};
